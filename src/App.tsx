@@ -85,20 +85,7 @@ function App() {
           {board.map((value, index) => {
             const canPlace = value === 0
             return (
-              <button
-                className="cell"
-                key={index}
-                disabled={!canPlace}
-                onClick={() => setCell(index, currentPlayer)}
-                style={{
-                  transform:
-                    round > 0 && !hasWinner
-                      ? `translate(
-                    ${Math.random() * 200 - 100}px,
-                    ${Math.random() * 200 - 100}px
-                  )`
-                      : 'none'
-                }}>
+              <button className="cell" key={index} disabled={!canPlace} onClick={() => setCell(index, currentPlayer)}>
                 {PlayerAvatars[value]}
               </button>
             )
