@@ -53,16 +53,9 @@ function App() {
 
   const winningPlayer = useMemo(() => {
     for (const pattern of PATTERNS) {
-      const playerIn: Player[] = []
-      for (const index of pattern) {
-        playerIn.push(board[index])
-      }
-
-      if (playerIn.length === pattern.length) {
-        for (const player of PLAYERS) {
-          if (playerIn.every((p) => p === player)) {
-            return player
-          }
+      for (const player of PLAYERS) {
+        if (pattern.every((index) => board[index] === player)) {
+          return player
         }
       }
     }
