@@ -5,8 +5,6 @@ const PLAYERS = [1, 2] as const
 
 type Player = (typeof PLAYERS)[number] | 0
 
-const INITIAL_BOARD: Player[] = [0, 0, 0, 0, 0, 0, 0, 0, 0]
-
 const PlayerAvatars: Record<Player, string | null> = {
   0: null,
   1: 'X',
@@ -30,23 +28,27 @@ const PATTERNS = [
   [0, 4, 8]
 ]
 
+const INITIAL_GAME = {
+  round: 0,
+  board: [0, 0, 0, 0, 0, 0, 0, 0, 0] as Player[]
+}
+
 function App() {
-  const [round, setRound] = useState(0)
-  const [board, setBoard] = useState(INITIAL_BOARD)
+  const [{ board, round }, setGame] = useState(INITIAL_GAME)
 
   const setCell = useCallback((index: number, value: Player) => {
-    setBoard((board) => {
-      const next = [...board]
-      next[index] = value
-      return next
+    setGame((game) => {
+      const board = [...game.board]
+      board[index] = value
+      return {
+        board,
+        round: game.round + 1
+      }
     })
-
-    setRound((round) => round + 1)
   }, [])
 
   const reset = useCallback(() => {
-    setBoard(INITIAL_BOARD)
-    setRound(0)
+    setGame(INITIAL_GAME)
   }, [])
 
   const currentPlayer = PLAYERS[round % PLAYERS.length]
